@@ -1,0 +1,33 @@
+FROM mck-developer-services-docker.jfrog.io/mcklabs-node-pipeline-base:7.0.0
+
+ARG ARTIFACTORY_USER
+ARG ARTIFACTORY_API_KEY
+ARG BRANCH
+ARG GITHUB_TOKEN
+ARG PCF_USER
+ARG PCF_PASSWORD
+ARG SONARQUBE_API_KEY
+
+ENV ARTIFACTORY_USER=$ARTIFACTORY_USER
+ENV ARTIFACTORY_API_KEY=$ARTIFACTORY_API_KEY
+ENV BRANCH=$BRANCH
+ENV GITHUB_TOKEN=$GITHUB_TOKEN
+
+ENV PCF_USER=$PCF_USER
+ENV PCF_PASSWORD=$PCF_PASSWORD
+ENV SONARQUBE_API_KEY=$SONARQUBE_API_KEY
+
+# Our pipeline uses this Dockerfile.build as the build agent.
+# Flume uses this to create a reproducible build environment that should mimic your local environment.
+#
+# For more information on configuring this file please visit:
+# https://prd-developer-services-support-docs.app.prod-west.paas.mckesson.com/pipeline/ci/#dockerfilebuild
+
+RUN mckduc node write-npm-config \
+    --artifactory-user "${ARTIFACTORY_USER}" \
+    --artifactory-apikey "${ARTIFACTORY_API_KEY}" \
+    --path ~/.npmrc
+
+WORKDIR /usr/app
+
+COPY . .

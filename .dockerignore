@@ -1,0 +1,10 @@
+build
+**/build
+node_modules
+**/node_modules
+logs
+**/logs
+packages/*/dist
+plugins/*/dist
+.pipeline
+.cfignore
