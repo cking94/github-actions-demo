@@ -8,3 +8,5 @@ packages/*/dist
 plugins/*/dist
 .pipeline
 .cfignore
+.dockerignore
+Dockerfile
